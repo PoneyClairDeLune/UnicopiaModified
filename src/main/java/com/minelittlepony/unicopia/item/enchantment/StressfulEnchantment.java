@@ -9,7 +9,7 @@ import net.minecraft.entity.EquipmentSlot;
 public class StressfulEnchantment extends SimpleEnchantment {
 
     protected StressfulEnchantment() {
-        super(Rarity.COMMON, true, 3, EquipmentSlot.values());
+        super(Rarity.VERY_RARE, true, 3, EquipmentSlot.values());
     }
 
     @Override
