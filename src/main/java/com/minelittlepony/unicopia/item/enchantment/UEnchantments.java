@@ -32,8 +32,9 @@ public interface UEnchantments {
 
     /**
      * Heavy players move more slowly but are less likely to be flung around wildly.
+     * Modified: Please don't just make most of the applicable items be enchanted with it...
      */
-    Enchantment HEAVY = register("heavy", new AttributedEnchantment(Rarity.COMMON, EnchantmentTarget.ARMOR_FEET, false, 4, EquipmentSlot.FEET))
+    Enchantment HEAVY = register("heavy", new AttributedEnchantment(Rarity.VERY_RARE, EnchantmentTarget.ARMOR_FEET, false, 4, EquipmentSlot.FEET))
             .addModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, (user, level) -> {
                 return new EntityAttributeModifier(UUID.fromString("a3d5a94f-4c40-48f6-a343-558502a13e10"), "Heavyness", (1 - level/(float)10) - 1, Operation.MULTIPLY_TOTAL);
             });
@@ -69,8 +70,9 @@ public interface UEnchantments {
 
     /**
      * Who doesn't like a good freakout?
+     * Modified: Who does if the freakout happens on nearly every item you try to enchant...
      */
-    Enchantment STRESSED = register("stressed", new StressfulEnchantment());
+    /* Enchantment STRESSED = register("stressed", new StressfulEnchantment()); */
 
     /**
      * This item just wants to be held.
