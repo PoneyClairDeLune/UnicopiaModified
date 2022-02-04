@@ -1,9 +1,10 @@
 {
-	"logs": [ "promenade:palm_log", "promenade:palm_wood"],
+	"logs": [ "promenade:palm_log", "promenade:palm_wood" ],
 	"leaves": [ "promenade:palm_leaves" ],
 	"drops": [
-		{ "weight": 28, "item": "unicopia:zap_apple" },
+		{ "weight": 18, "item": "unicopia:zap_apple" },
 		{ "weight": 1, "item": "minecraft:golden_apple" },
-		{ "weight": 29, "item": "minecraft:apple" }
+		{ "weight": 18, "item": "minecraft:apple" },
+                { "weight": 11, "item": "promenade:banana" }
 	]
 }
