@@ -120,7 +120,7 @@ public class RainbowTrailParticle extends AbstractBillboardParticle implements A
         }
 
         float getAlpha() {
-            return alpha * (1 - ((float)age / maxAge));
+            return colorAlpha * (1 - ((float)age / maxAge));
         }
 
         boolean tick() {

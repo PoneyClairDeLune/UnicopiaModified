@@ -210,6 +210,12 @@ public class FairyEntity extends PathAwareEntity implements DynamicLightSource, 
     }
 
     @Override
+    public void setRemoved(RemovalReason reason) {
+        super.setRemoved(reason);
+        emitter.remove();
+    }
+
+    @Override
     public void onRemoved() {
         super.onRemoved();
         emitter.remove();

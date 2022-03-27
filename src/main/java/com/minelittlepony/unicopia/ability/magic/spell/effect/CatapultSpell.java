@@ -10,7 +10,6 @@ import com.minelittlepony.unicopia.ability.magic.spell.ProjectileSpell;
 import com.minelittlepony.unicopia.ability.magic.spell.Situation;
 import com.minelittlepony.unicopia.ability.magic.spell.trait.SpellTraits;
 import com.minelittlepony.unicopia.ability.magic.spell.trait.Trait;
-import com.minelittlepony.unicopia.mixin.MixinFallingBlockEntity;
 import com.minelittlepony.unicopia.projectile.MagicProjectileEntity;
 import com.minelittlepony.unicopia.util.RayTraceHelper;
 
@@ -106,7 +105,7 @@ public class CatapultSpell extends AbstractSpell implements ProjectileSpell {
         }
 
         Vec3d pos = Vec3d.ofBottomCenter(bpos);
-        FallingBlockEntity e = MixinFallingBlockEntity.createInstance(world, pos.x, pos.y, pos.z, world.getBlockState(bpos));
+        FallingBlockEntity e = new FallingBlockEntity(world, pos.x, pos.y, pos.z, world.getBlockState(bpos));
         world.removeBlock(bpos, true);
         e.setOnGround(false);
         e.timeFalling = Integer.MIN_VALUE;
@@ -116,7 +115,5 @@ public class CatapultSpell extends AbstractSpell implements ProjectileSpell {
             apply.accept(e);
         }
         world.spawnEntity(e);
-
-        e.updateVelocity(HORIZONTAL_VARIANCE, pos);
     }
 }

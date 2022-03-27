@@ -6,8 +6,6 @@ import java.util.function.Predicate;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.minelittlepony.unicopia.util.Registries;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -57,7 +55,7 @@ interface StateMapping extends Predicate<BlockState>, BiFunction<World, BlockSta
                 (w, s) -> to.getDefaultState(),
                 s -> build(
                         p -> p.isOf(to),
-                        (w, p) -> Registries.entriesForTag(w, tag).getRandom(w.random).get().value().getDefaultState()
+                        (w, p) -> tag.getRandom(w.random).getDefaultState()
                     )
                 );
     }

@@ -37,9 +37,8 @@ public class Toxic {
         this.ailments = ailments;
     }
 
-    @SuppressWarnings("deprecation")
     public boolean matches(Item item) {
-        return item.getRegistryEntry().isIn(tag);
+        return tag.contains(item);
     }
 
     public Optional<FoodComponent> getFoodComponent() {
