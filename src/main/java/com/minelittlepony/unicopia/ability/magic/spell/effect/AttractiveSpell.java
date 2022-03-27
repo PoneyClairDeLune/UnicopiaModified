@@ -4,6 +4,7 @@ import com.minelittlepony.unicopia.ability.magic.Caster;
 import com.minelittlepony.unicopia.ability.magic.spell.ProjectileSpell;
 import com.minelittlepony.unicopia.ability.magic.spell.trait.SpellTraits;
 import com.minelittlepony.unicopia.ability.magic.spell.trait.Trait;
+import com.minelittlepony.unicopia.entity.player.Pony;
 import com.minelittlepony.unicopia.particle.FollowingParticleEffect;
 import com.minelittlepony.unicopia.particle.MagicParticleEffect;
 import com.minelittlepony.unicopia.particle.UParticles;
@@ -12,6 +13,7 @@ import com.minelittlepony.unicopia.util.shape.Sphere;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
@@ -51,15 +53,15 @@ public class AttractiveSpell extends ShieldSpell implements ProjectileSpell {
 
         boolean isGood = isFriendlyTogether(source);
 
-        if (isGood) {
-            force *= AttractionUtils.getForceAdjustment(target);
+        if (isGood && target instanceof PlayerEntity) {
+            force *= calculateAdjustedForce(Pony.of((PlayerEntity)target));
         }
 
         if (!isGood && source.getWorld().random.nextInt(4500) == 0) {
             source.getEntity().damage(MagicalDamageSource.create("vortex"), 4);
         }
 
-        AttractionUtils.applyForce(getOrigin(source), target, -force, 0, false);
+        applyForce(getOrigin(source), target, -force, 0);
 
         float maxVel = !isFriendlyTogether(source) ? 1 : 1.6f;
 
