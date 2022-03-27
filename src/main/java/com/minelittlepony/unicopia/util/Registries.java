@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 import com.mojang.serialization.Lifecycle;
 
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
-import net.minecraft.tag.TagKey;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
@@ -19,11 +19,11 @@ public interface Registries {
         return FabricRegistryBuilder.from(new SimpleRegistry<T>(RegistryKey.ofRegistry(id), Lifecycle.stable(), null)).buildAndRegister();
     }
 
-    static <T> RegistryEntryList<T> entriesForTag(World world, TagKey<T> key) {
+    static <T> RegistryEntryList<T> entriesForTag(World world, Tag<T> key) {
         return world.getRegistryManager().get(key.registry()).getOrCreateEntryList(key);
     }
 
-    static <T> Stream<T> valuesForTag(World world, TagKey<T> key) {
+    static <T> Stream<T> valuesForTag(World world, Tag<T> key) {
         return entriesForTag(world, key).stream().map(RegistryEntry::value);
     }
 }

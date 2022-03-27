@@ -16,7 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tag.ItemTags;
-import net.minecraft.tag.TagKey;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.Util;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOffers;
@@ -66,20 +66,20 @@ public interface UTradeOffers {
         return (e, rng) -> new TradeOffer(new ItemStack(item, count), new ItemStack(intermediate, intermediatCount), new ItemStack(returnItem, returnCount), maxUses, experience, priceChange);
     }
 
-    private static TradeOffers.Factory buy(TagKey<Item> item, int count, Item returnItem, int returnCount, int maxUses, int experience, float priceChange) {
+    private static TradeOffers.Factory buy(Tag<Item> item, int count, Item returnItem, int returnCount, int maxUses, int experience, float priceChange) {
         return (e, rng) -> new TradeOffer(new ItemStack(random(e, item, rng), count), new ItemStack(returnItem, returnCount), maxUses, experience, priceChange);
     }
 
     @SuppressWarnings("unused")
-    private static TradeOffers.Factory buy(TagKey<Item> item, int count, TagKey<Item> returnItem, int returnCount, int maxUses, int experience, float priceChange) {
+    private static TradeOffers.Factory buy(Tag<Item> item, int count, Tag<Item> returnItem, int returnCount, int maxUses, int experience, float priceChange) {
         return (e, rng) -> new TradeOffer(new ItemStack(random(e, item, rng), count), new ItemStack(random(e, returnItem, rng), returnCount), maxUses, experience, priceChange);
     }
 
-    private static TradeOffers.Factory buy(Item item, int count, TagKey<Item> returnItem, int returnCount, int maxUses, int experience, float priceChange) {
+    private static TradeOffers.Factory buy(Item item, int count, Tag<Item> returnItem, int returnCount, int maxUses, int experience, float priceChange) {
         return (e, rng) -> new TradeOffer(new ItemStack(item, count), new ItemStack(random(e, returnItem, rng), returnCount), maxUses, experience, priceChange);
     }
 
-    private static Item random(Entity e, TagKey<Item> item, Random rng) {
+    private static Item random(Entity e, Tag<Item> item, Random rng) {
         return Registries.entriesForTag(e.world, item).getRandom(rng).get().value();
     }
 
