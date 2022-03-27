@@ -74,12 +74,14 @@ public interface Toxics {
 
     Toxic RAW_FISH = register("raw_fish", new Toxic.Builder(Ailment.of(FAIR, FOOD_POISONING.and(POISON)))
             .with(Race.HUMAN, Ailment.INNERT)
-            .with(Race.PEGASUS, Ailment.of(MILD, POISON.and(WEAK_NAUSEA)))
+            .with(Race.PEGASUS, Ailment.of(FAIR, POISON.and(WEAK_NAUSEA)))
             .with(Race.CHANGELING, Ailment.of(MILD, POISON.and(WEAK_NAUSEA)))
             .with(Race.ALICORN, Ailment.INNERT)
     );
     Toxic COOKED_FISH = register("cooked_fish", new Toxic.Builder(Ailment.of(MILD, FOOD_POISONING))
             .with(Race.HUMAN, Ailment.INNERT)
+            .with(Race.EARTH, Ailment.of(FAIR, POISON.and(WEAK_NAUSEA)))
+            .with(Race.UNICORN, Ailment.INNERT)
             .with(Race.PEGASUS, Ailment.INNERT)
             .with(Race.CHANGELING, Ailment.INNERT)
             .with(Race.ALICORN, Ailment.INNERT)
