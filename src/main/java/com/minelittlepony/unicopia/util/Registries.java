@@ -27,3 +27,4 @@ public interface Registries {
         return entriesForTag(world, key).stream().map(RegistryEntry::value);
     }
 }
+

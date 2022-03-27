@@ -1,23 +1,14 @@
 package com.minelittlepony.unicopia.item;
 
-import static com.minelittlepony.unicopia.item.toxin.Toxin.INNERT;
-
 import java.util.Optional;
 
 import com.minelittlepony.unicopia.UTags;
-import com.minelittlepony.unicopia.Unicopia;
 import com.minelittlepony.unicopia.advancement.UCriteria;
-import com.minelittlepony.unicopia.entity.player.Pony;
-import com.minelittlepony.unicopia.item.toxin.Ailment;
-import com.minelittlepony.unicopia.item.toxin.Toxic;
-import com.minelittlepony.unicopia.item.toxin.ToxicHolder;
 import com.minelittlepony.unicopia.item.toxin.Toxicity;
 import com.minelittlepony.unicopia.particle.ParticleUtils;
 import com.minelittlepony.unicopia.particle.UParticles;
 import com.minelittlepony.unicopia.util.MagicalDamageSource;
 import com.minelittlepony.unicopia.util.RayTraceHelper;
-import com.minelittlepony.unicopia.util.Registries;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
@@ -26,7 +17,6 @@ import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.predicate.entity.EntityPredicates;
@@ -43,9 +33,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
-public class ZapAppleItem extends Item implements ChameleonItem, ToxicHolder {
-    private static final Optional<Toxic> TOXIC = Optional.of(new Toxic.Builder(Ailment.of(Toxicity.SEVERE, INNERT)).build("zap"));
-    private static final Optional<Toxic> HIDDEN_TOXIC = Optional.of(new Toxic.Builder(Ailment.of(Toxicity.SAFE, INNERT)).build("zap_hidden"));
+public class ZapAppleItem extends AppleItem implements ChameleonItem {
 
     public ZapAppleItem(Settings settings) {
         super(settings);
@@ -119,13 +107,12 @@ public class ZapAppleItem extends Item implements ChameleonItem, ToxicHolder {
     public void appendStacks(ItemGroup tab, DefaultedList<ItemStack> items) {
         super.appendStacks(tab, items);
         if (isIn(tab)) {
-            Unicopia.SIDE.getPony().map(Pony::getWorld)
-                    .stream()
-                    .flatMap(world -> Registries.valuesForTag(world, UTags.APPLES))
-                    .filter(a -> a != this).forEach(item -> {
-                ItemStack stack = new ItemStack(this);
-                stack.getOrCreateNbt().putString("appearance", Registry.ITEM.getId(item).toString());
-                items.add(stack);
+            UTags.APPLES.values().forEach(item -> {
+                if (item != this) {
+                    ItemStack stack = new ItemStack(this);
+                    stack.getOrCreateNbt().putString("appearance", Registry.ITEM.getId(item).toString());
+                    items.add(stack);
+                }
             });
         }
     }
@@ -136,8 +123,8 @@ public class ZapAppleItem extends Item implements ChameleonItem, ToxicHolder {
     }
 
     @Override
-    public Optional<Toxic> getToxic(ItemStack stack) {
-        return hasAppearance(stack) ? TOXIC : HIDDEN_TOXIC;
+    public Toxicity getToxicity(ItemStack stack) {
+        return hasAppearance(stack) ? Toxicity.SEVERE : Toxicity.SAFE;
     }
 
     @Override
@@ -149,3 +136,4 @@ public class ZapAppleItem extends Item implements ChameleonItem, ToxicHolder {
         return Rarity.RARE;
     }
 }
+
