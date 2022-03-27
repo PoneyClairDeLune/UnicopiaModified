@@ -130,7 +130,7 @@ public class AlicornAmuletItem extends AmuletItem implements PlayerCharmTracker.
 
         pony.getMaster().getHungerManager().setFoodLevel(1);
         pony.getMaster().damage(MagicalDamageSource.ALICORN_AMULET, amount);
-        pony.getMaster().addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200, 1));
+        pony.getMaster().addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 20, 1));
 
         if (attachedTime > 120) {
             pony.getMaster().takeKnockback(1, 1, 1);
@@ -223,7 +223,7 @@ public class AlicornAmuletItem extends AmuletItem implements PlayerCharmTracker.
 
         public static final Trick SPOOK = new Trick(0, 1050, player -> player.world.playSound(null, player.getBlockPos(), USounds.ITEM_ALICORN_AMULET_HALLUCINATION, SoundCategory.PLAYERS, 3, 1));
         public static final Trick WITHER = new Trick(20000, 100, player -> {
-            StatusEffectInstance effect = new StatusEffectInstance(player.world.random.nextInt(32000) == 0 ? StatusEffects.WITHER : StatusEffects.HUNGER, 300, 3);
+            StatusEffectInstance effect = new StatusEffectInstance(StatusEffects.LUCK, 300, 3);
             effect.setPermanent(true);
             player.addStatusEffect(effect);
         });
@@ -237,9 +237,12 @@ public class AlicornAmuletItem extends AmuletItem implements PlayerCharmTracker.
         });
         public static final Trick SWING = new Trick(2000, 100, player -> player.swingHand(Hand.MAIN_HAND));
         public static final Trick BAD_JOO_JOO = new Trick(1000, 10, player -> {
-            if (!player.hasStatusEffect(StatusEffects.BAD_OMEN)) {
-                player.addStatusEffect(new StatusEffectInstance(StatusEffects.BAD_OMEN, 300, 3));
-            }
+            if (!player.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)) {
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESIST, 300, 3));
+            };
+            if (!player.hasStatusEffect(StatusEffects.NIGHT_VISION)) {
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 300, 3));
+            };
         });
 
         private final int minTime;
