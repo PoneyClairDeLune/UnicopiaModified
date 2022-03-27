@@ -26,7 +26,7 @@ public interface Toxin extends Affliction {
 
     Toxin WEAKNESS = of(StatusEffects.WEAKNESS, 200, 1);
 
-    Toxin WEAK_NAUSEA = of(StatusEffects.NAUSEA, 17, 0);
+    Toxin WEAK_NAUSEA = of(StatusEffects.NAUSEA, 10, 0);
     Toxin NAUSEA = of(StatusEffects.NAUSEA, 20, 1);
     Toxin STRONG_NAUSEA = of(StatusEffects.NAUSEA, 30, 1);
 
@@ -39,7 +39,7 @@ public interface Toxin extends Affliction {
     Toxin LOVE_SICKNESS = of(Text.of("Love Sickness "), (player, stack) -> {
         FoodComponent food = stack.getItem().getFoodComponent();
         player.getHungerManager().add(-food.getHunger()/2, -food.getSaturationModifier()/2);
-    }).and(STRONG_NAUSEA).and(IF_NOT_PEACEFUL.then(WEAK_FOOD_POISONING.withChance(20))).and(WEAKNESS);
+    }).and(IF_NOT_PEACEFUL.then(WEAK_NAUSEA.withChance(2))).and(IF_NOT_PEACEFUL.then(WEAK_FOOD_POISONING.withChance(2))).and(IF_NOT_PEACEFUL.then(WEAKNESS.withChance(2)));
 
     default void appendTooltip(List<Text> tooltip) {
         tooltip.add(getName());
